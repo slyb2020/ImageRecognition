@@ -12,7 +12,7 @@ from torch.utils import tensorboard
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # leNet5 = LeNet5()
-model = LeeNet()
+model = LeeNet(inputChannel=1,padding=1)
 # model = torch.load('model/LeeNetMNISTDropout.pth')
 model.to(device)
 optimizer = torch.optim.SGD(model.parameters(), lr=1e-3, momentum=0.9)

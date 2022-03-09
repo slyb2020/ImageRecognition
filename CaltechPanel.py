@@ -13,7 +13,7 @@ import cv2
 from ID_DEFINE import *
 from DatasetLabelProcess import *
 import wx.lib.scrolledpanel as scrolled
-from torchvision.datasets import Caltech101,Caltech256
+from torchvision.datasets import Caltech101, Caltech256
 import numpy as np
 
 
@@ -34,7 +34,8 @@ class DatasetButtonShowPanel(scrolled.ScrolledPanel):
             b = image.shape[1]
             id = wx.NewId()
             button = wx.Button(self, id, size=(self.width, self.height))
-            bmp = wx.Image(b, a, image).Scale(self.width-1 , self.height-1, quality=wx.IMAGE_QUALITY_BOX_AVERAGE).ConvertToBitmap()
+            bmp = wx.Image(b, a, image).Scale(self.width - 1, self.height - 1,
+                                              quality=wx.IMAGE_QUALITY_BOX_AVERAGE).ConvertToBitmap()
             button.SetBitmap(bmp)
             button.SetToolTip(str(label))
             self.buttonIdList.append(id)
@@ -43,18 +44,19 @@ class DatasetButtonShowPanel(scrolled.ScrolledPanel):
         self.SetAutoLayout(1)
         self.SetupScrolling()
 
+
 class Caltech101Panel(wx.Panel):
     def __init__(self, parent, master, log):
         wx.Panel.__init__(self, parent)
         self.log = log
         self.master = master
         self.notebook = wx.Notebook(self, -1, size=(21, 21), style=
-                                    # wx.BK_DEFAULT
-                                    # wx.BK_TOP
-                                    wx.BK_BOTTOM
-                                    # wx.BK_LEFT
-                                    # wx.BK_RIGHT
-                                    | wx.NB_MULTILINE
+        # wx.BK_DEFAULT
+        # wx.BK_TOP
+        wx.BK_BOTTOM
+        # wx.BK_LEFT
+        # wx.BK_RIGHT
+        | wx.NB_MULTILINE
                                     )
         il = wx.ImageList(16, 16)
         il.Add(images._rt_smiley.GetBitmap())
@@ -82,12 +84,12 @@ class Caltech256Panel(wx.Panel):
         self.log = log
         self.master = master
         self.notebook = wx.Notebook(self, -1, size=(21, 21), style=
-                                    # wx.BK_DEFAULT
-                                    # wx.BK_TOP
-                                    wx.BK_BOTTOM
-                                    # wx.BK_LEFT
-                                    # wx.BK_RIGHT
-                                    | wx.NB_MULTILINE
+        # wx.BK_DEFAULT
+        # wx.BK_TOP
+        wx.BK_BOTTOM
+        # wx.BK_LEFT
+        # wx.BK_RIGHT
+        | wx.NB_MULTILINE
                                     )
         il = wx.ImageList(16, 16)
         il.Add(images._rt_smiley.GetBitmap())
@@ -100,7 +102,7 @@ class Caltech256Panel(wx.Panel):
         idx6 = il.Add(images._rt_redo.GetBitmap())
         hbox = wx.BoxSizer()
         for i in range(10):
-            self.notebook.AddPage(wx.Panel(self.notebook),"分类%d"%(i))
+            self.notebook.AddPage(wx.Panel(self.notebook), "分类%d" % (i))
             # self.datasetIntroductionPanel = wx.Panel(self.notebook)
             # self.notebook.AddPage(self.datasetIntroductionPanel, "数据集介绍")
             # self.caltech101Panel = Caltech101Panel(self.notebook, self.master, self.log)
@@ -121,12 +123,12 @@ class CaltechPanel(wx.Panel):
         # self.testDataset = iter(Caltech101(self.master.datasetProperty[-1]))
         # # self.testLoader = iter(torch.utils.data.DataLoader(self.testDataset, batch_size=198))
         self.notebook = wx.Notebook(self, -1, size=(21, 21), style=
-                                    # wx.BK_DEFAULT
-                                    wx.BK_TOP
-                                    # wx.BK_BOTTOM
-                                    # wx.BK_LEFT
-                                    # wx.BK_RIGHT
-                                    | wx.NB_MULTILINE
+        # wx.BK_DEFAULT
+        wx.BK_TOP
+        # wx.BK_BOTTOM
+        # wx.BK_LEFT
+        # wx.BK_RIGHT
+        | wx.NB_MULTILINE
                                     )
         il = wx.ImageList(16, 16)
         il.Add(images._rt_smiley.GetBitmap())
@@ -160,4 +162,3 @@ class CaltechPanel(wx.Panel):
         # if id in self.trainDatasetPanel.buttonIdList:
         #     self.index = self.trainDatasetPanel.buttonIdList.index(id)
         #     self.leftPanel.Refresh()
-

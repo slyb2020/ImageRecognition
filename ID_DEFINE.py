@@ -37,18 +37,15 @@ ID_WINDOW_BOTTOM = wx.NewId()
 ID_DATASET_BTN = wx.NewId()
 ID_LeNet_BTN = wx.NewId()
 
-
-LeNetModelList = ["LeNet","LeeNet"]
-
-
+LeNetModelList = ["LeNet", "LeeNet"]
 
 CLASSES = ['person', 'bird', 'cat', 'cow', 'dog', 'horse', 'sheep',
            'airplane', 'bicycle', 'boat', 'bus', 'car', 'motobike', 'train',
            'bottle', 'chair', 'dining table', 'potted plant', 'sofa', 'tvmonitor']
 
 CLASSES2 = ['人', '鸟', '猫', '牛', '狗', '马', '羊',
-           '飞机', '自行车', '船', '公交车', '小汽车', '摩托车', '火车',
-           '瓶子', '椅子', '餐桌', '盆栽', '沙发', '显示器']
+            '飞机', '自行车', '船', '公交车', '小汽车', '摩托车', '火车',
+            '瓶子', '椅子', '餐桌', '盆栽', '沙发', '显示器']
 
 COLOR = [(255, 0, 0), (255, 125, 0), (255, 255, 0), (255, 0, 125), (255, 0, 250),
          (255, 125, 125), (255, 125, 250), (125, 125, 0), (0, 255, 125), (255, 0, 0),
@@ -58,11 +55,11 @@ COLOR = [(255, 0, 0), (255, 125, 0), (255, 255, 0), (255, 0, 125), (255, 0, 250)
 dirName = os.path.dirname(os.path.abspath(__file__))
 modelsDir = os.path.join(dirName, "Models\\")
 ButtonIdArray = [
-    [wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId()],
-    [wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId()],
-    [wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId()],
-    [wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId()],
-    [wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId()],
-    [wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId()],
-    [wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId(),wx.NewId()],
+    [wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId()],
+    [wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId()],
+    [wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId()],
+    [wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId()],
+    [wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId()],
+    [wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId()],
+    [wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId(), wx.NewId()],
 ]

@@ -4,12 +4,12 @@ from torch import nn
 from MNIST_Dataset import *
 
 class LeeNet(nn.Module):
-    def __init__(self):
+    def __init__(self, inputChannel=3, padding=0):
         super(LeeNet, self).__init__()
         self.layer1 = nn.Sequential(
-            nn.Conv2d(1, 1, kernel_size=3, stride=1, padding=1),
-            nn.BatchNorm2d(1, eps=1e-5, momentum=0.1, affine=True),
-            nn.Conv2d(1, 6, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(inputChannel, inputChannel, kernel_size=3, stride=1, padding=padding),
+            nn.BatchNorm2d(inputChannel, eps=1e-5, momentum=0.1, affine=True),
+            nn.Conv2d(inputChannel, 6, kernel_size=3, stride=1, padding=padding),
             nn.BatchNorm2d(6, eps=1e-5, momentum=0.1, affine=True),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.ReLU()

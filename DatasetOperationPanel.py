@@ -14,6 +14,7 @@ from MNISTPanel import MNISTPanel
 from CaltechPanel import CaltechPanel
 from CIFARPanel import CIFARPanel
 
+
 class DatasetOperationPanel(wx.Panel):
     def __init__(self, parent, log):
         wx.Panel.__init__(self, parent, -1)
@@ -25,7 +26,7 @@ class DatasetOperationPanel(wx.Panel):
         self.datasetTreePanel = DatasetTreePanel(self, self.log, size=(180, 300))
         self.datasetTempPanel = wx.Panel(self)
         self.datasetShowPanel = wx.Panel(self.datasetTempPanel)
-        self.datasetShowPanel.SetBackgroundColour(wx.Colour(122,112,23))
+        self.datasetShowPanel.SetBackgroundColour(wx.Colour(122, 112, 23))
         sizer = wx.BoxSizer()
         sizer.Add(self.datasetShowPanel, 1, wx.EXPAND)
         self.datasetTempPanel.SetSizer(sizer)
@@ -48,8 +49,8 @@ class DatasetOperationPanel(wx.Panel):
         itemdata = self.datasetTreePanel.tree.GetItemData(item)
         itemtext = self.datasetTreePanel.tree.GetItemText(item)
         self.datasetProperty = itemdata.split(',')
-        if len(self.datasetProperty)>1:  #如果鼠标每点击tree的那个‘+’
-            if self.datasetProperty[1] != self.exDatasetName:   #如果更换了数据集
+        if len(self.datasetProperty) > 1:  # 如果鼠标每点击tree的那个‘+’
+            if self.datasetProperty[1] != self.exDatasetName:  # 如果更换了数据集
                 self.exDatasetName = self.datasetProperty[1]
                 self.datasetShowPanel.Destroy()
                 self.datasetTempPanel.DestroyChildren()
@@ -64,7 +65,7 @@ class DatasetOperationPanel(wx.Panel):
                 sizer = wx.BoxSizer()
                 sizer.Add(self.datasetShowPanel, 1, wx.EXPAND)
                 self.datasetTempPanel.SetSizer(sizer)
-            else: #如果是在相同数据集的不同子集之间切换
+            else:  # 如果是在相同数据集的不同子集之间切换
                 if self.datasetProperty[1] == "MNIST":
                     if self.datasetProperty[2] == "训练数据集":
                         self.datasetShowPanel.notebook.SetSelection(1)
@@ -87,4 +88,5 @@ class DatasetOperationPanel(wx.Panel):
                     else:
                         self.datasetShowPanel.notebook.SetSelection(0)
         self.datasetTempPanel.Layout()
-6
+
+
