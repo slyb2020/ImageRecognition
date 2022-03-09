@@ -10,7 +10,7 @@ from MNIST_Dataset import *
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-leNet5 = LeNet5()
+leNet5 = LeNet5(inputChannel=1, padding=2)
 leNet5.to(device)
 optimizer = torch.optim.SGD(leNet5.parameters(), lr=1e-3, momentum=0.9)
 Loss = torch.nn.CrossEntropyLoss()

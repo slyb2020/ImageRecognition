@@ -3,10 +3,10 @@ import torchvision
 from torch import nn
 
 class LeNet5(nn.Module):
-    def __init__(self):
+    def __init__(self, inputChannel=3, padding=0):
         super(LeNet5, self).__init__()
         self.layer1 = nn.Sequential(
-            nn.Conv2d(1, 6, kernel_size=5, stride=1, padding=2),
+            nn.Conv2d(inputChannel, 6, kernel_size=5, stride=1, padding=padding),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.ReLU()
         )
