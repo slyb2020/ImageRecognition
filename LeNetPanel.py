@@ -17,8 +17,8 @@ from wx.lib import plot as wxplot
 testDataset = MNIST(root="D:\\WorkSpace\\DataSet", train=False)
 
 
-def DrawEpochAccuracyLossCurve():
-    data = pd.read_csv("./log/LeNet/LeNetCIFAR10/LeNetCIFAR10.csv")
+def DrawEpochAccuracyLossCurve(fileName):
+    data = pd.read_csv(fileName)
     epoch = data['epoch'].values
     loss = data['loss'].values
     accuracyTrain = data['accuracyTrain']
@@ -227,7 +227,6 @@ class LeNetCIFAR10Panel(wx.Panel):
         self.notebook.AddPage(self.curveShowPanel, "训练过程曲线显示面板")
         hbox.Add(self.notebook, 1, wx.EXPAND)
         self.rightPanel.SetSizer(hbox)
-        self.curveShowPanel.Draw(DrawEpochAccuracyLossCurve())
 
         vvbox = wx.BoxSizer(wx.VERTICAL)
         self.buttonIDList = []
@@ -247,6 +246,9 @@ class LeNetCIFAR10Panel(wx.Panel):
         self.errorShowPanel.SetSizer(vvbox)
         self.Bind(wx.EVT_BUTTON, self.OnButton)
 
+    def DrawEpochAccuracyLossCurve(self,fileName):
+        self.curveShowPanel.Draw(DrawEpochAccuracyLossCurve(fileName))
+
     def OnButton(self, event):
         objectId = event.GetId()
         if objectId in self.buttonIDList:
@@ -263,6 +265,10 @@ class LeNetCIFAR10Panel(wx.Panel):
             self.panelList[predict].data.append([index, label])
         for i in range(10):
             self.panelList[i].ReCreate()
+
+class LeeNetCIFAR10Panel(LeNetCIFAR10Panel):
+    def __init__(self, parent, log):
+        super(LeeNetCIFAR10Panel, self).__init__(parent,log)
 
 
 class LeNetPanel(wx.Panel):
@@ -293,8 +299,12 @@ class LeNetPanel(wx.Panel):
         self.notebook.AddPage(self.leNetNMISTlPanel, "LeNet在MNIST上的应用")
         self.leNetCIFAR10Panel = LeNetCIFAR10Panel(self.notebook, self.log)
         self.notebook.AddPage(self.leNetCIFAR10Panel, "LeNet在CIFAR10上的应用")
+        self.leeNetCIFAR10Panel = LeeNetCIFAR10Panel(self.notebook, self.log)
+        self.notebook.AddPage(self.leeNetCIFAR10Panel, "LeeNet在CIFAR10上的应用")
         hbox.Add(self.notebook, 1, wx.EXPAND)
         self.SetSizer(hbox)
+        self.leNetCIFAR10Panel.DrawEpochAccuracyLossCurve("log/LeNet/LeNetCIFAR10/LeNetCIFAR10.csv")
+        self.leeNetCIFAR10Panel.DrawEpochAccuracyLossCurve("log/LeNet/LeeNetCIFAR10/LeeNetCIFAR10.csv")
     #     self.Bind(wx.EVT_BUTTON, self.OnPictureButton)
     #
     # def OnPictureButton(self, event):
