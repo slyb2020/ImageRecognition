@@ -16,6 +16,7 @@ leNet5 = LeNet5()
 # leNet5 = torch.load("model/LeNet/LeNetCIFAR10_6337.pth")
 leNet5.to(device)
 optimizer = torch.optim.SGD(leNet5.parameters(), lr=1e-3, momentum=0.9)
+# scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200)
 Loss = torch.nn.CrossEntropyLoss()
 Loss.to(device)
 maxEpoch = 500
@@ -64,6 +65,8 @@ for epoch in range(maxEpoch):
     if maxAccuracy<(100*accuracyTotal/testSize):
         maxAccuracy=100*accuracyTotal/testSize
         torch.save(leNet5, "model/LeNet/LeNetCIFAR10_%s.pth"%(int(maxAccuracy*100)))
+    scheduler.step()
+
 
 torch.save(leNet5, "model/LeNet/LeNetCIFAR10_%s.pth"%(int(100*accuracyTotal/testSize)))
 epochList = np.array(epochList).reshape(-1,1)
@@ -72,4 +75,4 @@ accuracyTrainList = np.array(accuracyTrainList).reshape(-1,1)
 accuracyTestList = np.array(accuracyTestList).reshape(-1,1)
 dataArray = np.hstack((epochList,lossEpochList,accuracyTrainList,accuracyTestList))
 dataFrame = pd.DataFrame(dataArray, columns=['epoch','loss','accuracyTrain','accuracyTest'])
-dataFrame.to_csv("./log/LeNet/LeNetCIFAR10/LeNetCIFAR10.csv",mode='w',index=None,encoding='utf_8_sig')
+dataFrame.to_csv("./log/LeNet/LeNetCIFAR10/LeNetCIFAR10P.csv",mode='w',index=None,encoding='utf_8_sig')

@@ -90,8 +90,8 @@ class LeNetMNISTPanel(wx.Panel):
     def __init__(self, parent, log):
         wx.Panel.__init__(self, parent)
         self.log = log
-        self.leftPanel = wx.Panel(self, size=(340, -1), style=wx.BORDER_THEME)
-        self.middlePanel = wx.Panel(self, size=(300, -1))
+        self.leftPanel = wx.Panel(self, size=(240, -1), style=wx.BORDER_THEME)
+        self.middlePanel = wx.Panel(self, size=(450, -1))
         self.rightPanel = wx.Panel(self, size=(800, -1), style=wx.BORDER_THEME)
         hbox = wx.BoxSizer()
         hbox.Add(self.leftPanel, 0, wx.EXPAND)
@@ -103,83 +103,7 @@ class LeNetMNISTPanel(wx.Panel):
         hhbox = wx.BoxSizer()
         hhbox.Add((10, -1))
         hhbox.Add(wx.StaticText(self.leftPanel, label="模型结构:", size=(70, -1)), 0, wx.TOP, 5)
-        self.modelStructureCombo = wx.ComboBox(self.leftPanel, value="LeNet", choices=LeNetModelList, size=(240, -1))
-        hhbox.Add(self.modelStructureCombo, 0)
-        vbox.Add(hhbox, 0, wx.EXPAND)
-        vbox.Add((-1, 10))
-        hhbox = wx.BoxSizer()
-        hhbox.Add((10, -1))
-        modelName = self.modelStructureCombo.GetValue()
-        preList = os.listdir("model/" + modelName + '/')
-        hhbox.Add(wx.StaticText(self.leftPanel, label="预训练模型:", size=(70, -1)), 0, wx.TOP, 5)
-        self.preModelCombo = wx.ComboBox(self.leftPanel, value=preList[-1], choices=preList, size=(240, -1))
-        hhbox.Add(self.preModelCombo, 0)
-        vbox.Add(hhbox, 0, wx.EXPAND)
-        vbox.Add(wx.Panel(self.leftPanel), 1)
-        self.runBTN = wx.Button(self.leftPanel, label="运行", size=(200, 35))
-        self.runBTN.Bind(wx.EVT_BUTTON, self.RunErrorTest)
-        vbox.Add(self.runBTN, 0, wx.EXPAND | wx.ALL, 2)
-        self.leftPanel.SetSizer(vbox)
-
-        hhbox = wx.BoxSizer()
-        self.modelTXT = wx.TextCtrl(self.middlePanel, size=(100, 100), style=wx.TE_MULTILINE | wx.TE_READONLY)
-        hhbox.Add(self.modelTXT, 1, wx.ALL | wx.EXPAND)
-        self.middlePanel.SetSizer(hhbox)
-
-        vvbox = wx.BoxSizer(wx.VERTICAL)
-        self.buttonIDList = []
-        self.buttonList = []
-        self.panelList = []
-        for i in range(10):
-            hhbox = wx.BoxSizer()
-            id = wx.NewId()
-            self.buttonIDList.append(id)
-            button = wx.Button(self.rightPanel, id, label="%d" % i, size=(50, 10))
-            self.buttonList.append(button)
-            hhbox.Add(button, 0, wx.EXPAND)
-            panel = ErrorPicPanel(self.rightPanel)
-            self.panelList.append(panel)
-            hhbox.Add(panel, 1, wx.EXPAND)
-            vvbox.Add(hhbox, 1, wx.EXPAND)
-        self.rightPanel.SetSizer(vvbox)
-        self.Bind(wx.EVT_BUTTON, self.OnButton)
-
-    def OnButton(self, event):
-        objectId = event.GetId()
-        if objectId in self.buttonIDList:
-            index = self.buttonIDList.index(objectId)
-
-    def RunErrorTest(self, event):
-        modelStructure = self.modelStructureCombo.GetValue()
-        modelStructure = LeNetModelList.index(modelStructure)
-        preModel = self.preModelCombo.GetValue()
-        errorList = ErrorTest(modelStructure, preModel)
-        for i in range(10):
-            self.panelList[i].data = []
-        for index, label, predict in errorList:
-            self.panelList[predict].data.append([index, label])
-        for i in range(10):
-            self.panelList[i].ReCreate()
-
-
-class LeNetCIFAR10Panel(wx.Panel):
-    def __init__(self, parent, log):
-        wx.Panel.__init__(self, parent)
-        self.log = log
-        self.leftPanel = wx.Panel(self, size=(340, -1), style=wx.BORDER_THEME)
-        self.middlePanel = wx.Panel(self, size=(300, -1))
-        self.rightPanel = wx.Panel(self, size=(800, -1), style=wx.BORDER_THEME)
-        hbox = wx.BoxSizer()
-        hbox.Add(self.leftPanel, 0, wx.EXPAND)
-        hbox.Add(self.middlePanel, 0, wx.EXPAND)
-        hbox.Add(self.rightPanel, 1, wx.EXPAND)
-        self.SetSizer(hbox)
-        vbox = wx.BoxSizer(wx.VERTICAL)
-        vbox.Add((-1, 5))
-        hhbox = wx.BoxSizer()
-        hhbox.Add((10, -1))
-        hhbox.Add(wx.StaticText(self.leftPanel, label="模型结构:", size=(70, -1)), 0, wx.TOP, 5)
-        self.modelStructureCombo = wx.ComboBox(self.leftPanel, value="LeNet", choices=LeNetModelList, size=(240, -1))
+        self.modelStructureCombo = wx.ComboBox(self.leftPanel, value="LeNet", choices=LeNetModelList, size=(150, -1))
         self.modelStructureCombo.Enable(False)
         hhbox.Add(self.modelStructureCombo, 0)
         vbox.Add(hhbox, 0, wx.EXPAND)
@@ -189,7 +113,7 @@ class LeNetCIFAR10Panel(wx.Panel):
         modelName = self.modelStructureCombo.GetValue()
         preList = os.listdir("model/" + modelName + '/')
         hhbox.Add(wx.StaticText(self.leftPanel, label="预训练模型:", size=(70, -1)), 0, wx.TOP, 5)
-        self.preModelCombo = wx.ComboBox(self.leftPanel, value=preList[-1], choices=preList, size=(240, -1))
+        self.preModelCombo = wx.ComboBox(self.leftPanel, value=preList[-1], choices=preList, size=(150, -1))
         hhbox.Add(self.preModelCombo, 0)
         vbox.Add(hhbox, 0, wx.EXPAND)
         vbox.Add(wx.Panel(self.leftPanel), 1)
@@ -200,6 +124,7 @@ class LeNetCIFAR10Panel(wx.Panel):
 
         hhbox = wx.BoxSizer()
         self.modelTXT = wx.TextCtrl(self.middlePanel, size=(100, 100), style=wx.TE_MULTILINE | wx.TE_READONLY)
+        self.modelTXT.SetEditable(False)
         hhbox.Add(self.modelTXT, 1, wx.ALL | wx.EXPAND)
         self.middlePanel.SetSizer(hhbox)
 
@@ -245,6 +170,10 @@ class LeNetCIFAR10Panel(wx.Panel):
             vvbox.Add(hhbox, 1, wx.EXPAND)
         self.errorShowPanel.SetSizer(vvbox)
         self.Bind(wx.EVT_BUTTON, self.OnButton)
+    def ShowModelStructure(self, filename):
+        file = open(filename)
+        self.modelTXT.SetValue(file.read())
+        file.close()
 
     def DrawEpochAccuracyLossCurve(self,fileName):
         self.curveShowPanel.Draw(DrawEpochAccuracyLossCurve(fileName))
@@ -265,6 +194,11 @@ class LeNetCIFAR10Panel(wx.Panel):
             self.panelList[predict].data.append([index, label])
         for i in range(10):
             self.panelList[i].ReCreate()
+
+
+class LeNetCIFAR10Panel(LeNetMNISTPanel):
+    def __init__(self, parent, log):
+        super(LeNetCIFAR10Panel, self).__init__(parent,log)
 
 class LeeNetCIFAR10Panel(LeNetCIFAR10Panel):
     def __init__(self, parent, log):
@@ -303,6 +237,11 @@ class LeNetPanel(wx.Panel):
         self.notebook.AddPage(self.leeNetCIFAR10Panel, "LeeNet在CIFAR10上的应用")
         hbox.Add(self.notebook, 1, wx.EXPAND)
         self.SetSizer(hbox)
+
+        self.leNetNMISTlPanel.ShowModelStructure("./model/LeNet.mdl")
+        self.leNetCIFAR10Panel.ShowModelStructure("./model/LeNet.mdl")
+        self.leeNetCIFAR10Panel.ShowModelStructure("./model/LeeNet.mdl")
+
         self.leNetCIFAR10Panel.DrawEpochAccuracyLossCurve("log/LeNet/LeNetCIFAR10/LeNetCIFAR10.csv")
         self.leeNetCIFAR10Panel.DrawEpochAccuracyLossCurve("log/LeNet/LeeNetCIFAR10/LeeNetCIFAR10.csv")
     #     self.Bind(wx.EVT_BUTTON, self.OnPictureButton)
