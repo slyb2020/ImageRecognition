@@ -25,6 +25,7 @@ from wx.lib.agw.artmanager import ArtManager, DCSaver
 from wx.lib.agw.fmresources import ControlFocus, ControlPressed
 from DatasetOperationPanel import DatasetOperationPanel
 from LeNetPanel import LeNetPanel
+from VGGNetPanel import VGGNetPanel
 
 dirName = os.path.dirname(os.path.abspath(__file__))
 bitmapDir = os.path.join(dirName, 'bitmaps')
@@ -273,8 +274,10 @@ class MainPanel(wx.Panel):
         id = event.GetId()
         if id == ID_DATASET_BTN:
             self.work_zone_Panel.notebook.SetSelection(0)
-        if id == ID_LeNet_BTN:
+        elif id == ID_LeNet_BTN:
             self.work_zone_Panel.notebook.SetSelection(1)
+        elif id == ID_VGGNet_BTN:
+            self.work_zone_Panel.notebook.SetSelection(2)
 
     def OnSize(self, event):
         wx.adv.LayoutAlgorithm().LayoutWindow(self, self.work_zone_Panel)
@@ -310,10 +313,13 @@ class MainPanel(wx.Panel):
         self.datasetOperationrBTN.Enable(True)
         self.LeNetBTN = AB.AquaButton(panel, ID_LeNet_BTN, bitmap, "LeNet", size=(100, 50))
         self.LeNetBTN.SetForegroundColour(wx.BLACK)
+        self.VGGNetBTN = AB.AquaButton(panel, ID_VGGNet_BTN, bitmap, "VGGNet", size=(100, 50))
+        self.VGGNetBTN.SetForegroundColour(wx.BLACK)
         static = wx.StaticLine(panel, -1)
         vbox = wx.BoxSizer(wx.VERTICAL)
         vbox.Add(self.datasetOperationrBTN, 0, wx.EXPAND | wx.TOP | wx.BOTTOM, 5)
         vbox.Add(self.LeNetBTN, 0, wx.EXPAND | wx.TOP | wx.BOTTOM, 5)
+        vbox.Add(self.VGGNetBTN, 0, wx.EXPAND | wx.TOP | wx.BOTTOM, 5)
         vbox.Add(static, 0, wx.EXPAND | wx.TOP | wx.BOTTOM, 5)
         panel.SetSizer(vbox)
         self._pnl.AddFoldPanelWindow(item, panel, fpb.FPB_ALIGN_WIDTH, 5, 0)
@@ -348,4 +354,6 @@ class WorkZonePanel(wx.Panel):
         self.notebook.AddPage(self.datasetOperationPNL, "数据集操作面板")
         self.leNetPNL = LeNetPanel(self.notebook, self.log)
         self.notebook.AddPage(self.leNetPNL, "LeNet面板")
+        self.VGGNetPNL = VGGNetPanel(self.notebook, self.log)
+        self.notebook.AddPage(self.VGGNetPNL, "VGGNet面板")
         self.SetSizer(hbox)

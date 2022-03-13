@@ -16,7 +16,7 @@ leNet5 = LeNet5()
 # leNet5 = torch.load("model/LeNet/LeNetCIFAR10_6337.pth")
 leNet5.to(device)
 optimizer = torch.optim.SGD(leNet5.parameters(), lr=1e-3, momentum=0.9)
-# scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200)
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200)
 Loss = torch.nn.CrossEntropyLoss()
 Loss.to(device)
 maxEpoch = 500

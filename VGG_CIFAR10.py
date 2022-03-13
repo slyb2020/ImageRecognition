@@ -14,13 +14,15 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # leNet5 = LeNet5()
 model = VGG('VGG16')
+# print(model)
 # model = torch.load('model/LeeNetMNISTDropout.pth')
 model.to(device)
 optimizer = torch.optim.SGD(model.parameters(), lr=1e-3, momentum=0.9)
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=200)
 Loss = torch.nn.CrossEntropyLoss()
 Loss.to(device)
-maxEpoch = 20
-maxAccuracy = 80
+maxEpoch = 200
+maxAccuracy = 90.41
 accuracyTrainList = []
 accuracyTestList = []
 epochList = []
@@ -67,12 +69,13 @@ for epoch in range(maxEpoch):
     if maxAccuracy < (100 * accuracyTotalTest / testSize):
         maxAccuracy = 100 * accuracyTotalTest / testSize
         torch.save(model, "model/VGG/VGG16%s.pth" % (int(maxAccuracy * 100)))
+    scheduler.step()
 
-# torch.save(model, "model/LeeNet/LeeNetCIFAR10_%s.pth"%(int(maxAccuracy*100)))
+torch.save(model, "model/VGG/VGG16%s.pth" % (int(maxAccuracy * 100)))
 epochList = np.array(epochList).reshape(-1, 1)
 lossEpochList = np.array(lossEpochList).reshape(-1, 1)
 accuracyTrainList = np.array(accuracyTrainList).reshape(-1, 1)
 accuracyTestList = np.array(accuracyTestList).reshape(-1, 1)
 dataArray = np.hstack((epochList, lossEpochList, accuracyTrainList, accuracyTestList))
 dataFrame = pd.DataFrame(dataArray, columns=['epoch', 'loss', 'accuracyTrain', 'accuracyTest'])
-dataFrame.to_csv("./log/VGG/VGG16/VGG16CIFAR10.csv", mode='w', index=None, encoding='utf_8_sig')
+dataFrame.to_csv("./log/VGG/VGG16/VGG16CIFAR10A.csv", mode='w', index=None, encoding='utf_8_sig')

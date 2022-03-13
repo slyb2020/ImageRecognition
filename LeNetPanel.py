@@ -17,7 +17,7 @@ from wx.lib import plot as wxplot
 testDataset = MNIST(root="D:\\WorkSpace\\DataSet", train=False)
 
 
-def DrawEpochAccuracyLossCurve(fileName):
+def DrawEpochAccuracyLossCurve(fileName,fileName2=None):
     data = pd.read_csv(fileName)
     epoch = data['epoch'].values
     loss = data['loss'].values
@@ -48,11 +48,49 @@ def DrawEpochAccuracyLossCurve(fileName):
                                  marker='circle',
                                  size=1,
                                  )
-    return wxplot.PlotGraphics([lines1, markers1, lines2, markers2, lines3, markers3],
-                               "w & bias 收敛过程曲线",
-                               "迭代次数",
-                               "Y Axis",
-                               )
+    if fileName2:
+        data = pd.read_csv(fileName2)
+        epoch = data['epoch'].values
+        loss = data['loss'].values
+        accuracyTrain = data['accuracyTrain']
+        accuracyTest = data['accuracyTest']
+        loss = loss / 12.
+        data1 = np.hstack((np.array(epoch).reshape(-1, 1), np.array(loss).reshape(-1, 1)))
+        data2 = np.hstack((np.array(epoch).reshape(-1, 1), np.array(accuracyTrain).reshape(-1, 1)))
+        data3 = np.hstack((np.array(epoch).reshape(-1, 1), np.array(accuracyTest).reshape(-1, 1)))
+        lines4 = wxplot.PolySpline(data1, legend='loss', colour='blue', width=2)
+        markers4 = wxplot.PolyMarker(data1,
+                                     legend='loss',
+                                     colour='blue',
+                                     marker='circle',
+                                     size=1,
+                                     )
+        lines5 = wxplot.PolySpline(data2, legend='bias', colour='green', width=2)
+        markers5 = wxplot.PolyMarker(data2,
+                                     legend='TrainAccuracy',
+                                     colour='green',
+                                     marker='circle',
+                                     size=1,
+                                     )
+        lines6 = wxplot.PolySpline(data3, legend='loss', colour='red', width=2)
+        markers6 = wxplot.PolyMarker(data3,
+                                     legend='TestAccuracy',
+                                     colour='red',
+                                     marker='circle',
+                                     size=1,
+                                     )
+    if fileName2:
+        return wxplot.PlotGraphics([lines1, markers1, lines2, markers2, lines3, markers3, lines4, markers4, lines5, markers5, lines6, markers6],
+                                   "w & bias 收敛过程曲线",
+                                   "迭代次数",
+                                   "Y Axis",
+                                   )
+    else:
+        return wxplot.PlotGraphics([lines1, markers1, lines2, markers2, lines3, markers3],
+                                   "w & bias 收敛过程曲线",
+                                   "迭代次数",
+                                   "Y Axis",
+                                   )
 
 
 class ErrorPicPanel(scrolled.ScrolledPanel):
@@ -175,8 +213,8 @@ class LeNetMNISTPanel(wx.Panel):
         self.modelTXT.SetValue(file.read())
         file.close()
 
-    def DrawEpochAccuracyLossCurve(self,fileName):
-        self.curveShowPanel.Draw(DrawEpochAccuracyLossCurve(fileName))
+    def DrawEpochAccuracyLossCurve(self,fileName,fileName2=None):
+        self.curveShowPanel.Draw(DrawEpochAccuracyLossCurve(fileName,fileName2))
 
     def OnButton(self, event):
         objectId = event.GetId()
@@ -194,7 +232,6 @@ class LeNetMNISTPanel(wx.Panel):
             self.panelList[predict].data.append([index, label])
         for i in range(10):
             self.panelList[i].ReCreate()
-
 
 class LeNetCIFAR10Panel(LeNetMNISTPanel):
     def __init__(self, parent, log):
@@ -242,7 +279,7 @@ class LeNetPanel(wx.Panel):
         self.leNetCIFAR10Panel.ShowModelStructure("./model/LeNet.mdl")
         self.leeNetCIFAR10Panel.ShowModelStructure("./model/LeeNet.mdl")
 
-        self.leNetCIFAR10Panel.DrawEpochAccuracyLossCurve("log/LeNet/LeNetCIFAR10/LeNetCIFAR10.csv")
+        self.leNetCIFAR10Panel.DrawEpochAccuracyLossCurve("log/LeNet/LeNetCIFAR10/LeNetCIFAR10.csv", "log/LeNet/LeNetCIFAR10/LeNetCIFAR10P.csv")
         self.leeNetCIFAR10Panel.DrawEpochAccuracyLossCurve("log/LeNet/LeeNetCIFAR10/LeeNetCIFAR10.csv")
     #     self.Bind(wx.EVT_BUTTON, self.OnPictureButton)
     #

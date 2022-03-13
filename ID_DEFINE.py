@@ -36,6 +36,7 @@ ID_WINDOW_LEFT = wx.NewId()
 ID_WINDOW_BOTTOM = wx.NewId()
 ID_DATASET_BTN = wx.NewId()
 ID_LeNet_BTN = wx.NewId()
+ID_VGGNet_BTN = wx.NewId()
 
 LeNetModelList = ["LeNet", "LeeNet"]
 
